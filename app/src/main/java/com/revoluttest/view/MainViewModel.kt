@@ -38,7 +38,7 @@ constructor(private val currencyRateRepository: CurrencyRateRepository) : ViewMo
             defaultFirstResponderISO, defaultFirstResponderValue
         )
 
-        Observable.interval(1, TimeUnit.SECONDS)
+        Observable.interval(10, TimeUnit.SECONDS)
             .subscribe {
                 getCurrencyRate()
             }
@@ -46,7 +46,6 @@ constructor(private val currencyRateRepository: CurrencyRateRepository) : ViewMo
 
     fun getCurrencyRate() {
         compositeDisposable.add(currencyRateRepository.getCurrencyRate(firstResponder.iso3)
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { response ->
